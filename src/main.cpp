@@ -16,7 +16,7 @@ void setup()
   SPI.begin();
   rfidReader.PCD_Init();
 
-  Serial.println("Karte einlesen");
+  Serial.println("Read card");
   while (true)
   {
     if (rfidReader.PICC_IsNewCardPresent())
@@ -30,7 +30,7 @@ void setup()
         }
         masterID.toUpperCase();
 
-        Serial.print("Erfolgreich eingelesen! KartenID: ");
+        Serial.print("Read successfully! CardID: ");
         Serial.println(masterID);
         break;
       }
@@ -76,7 +76,7 @@ void PrintCardUID()
   if (!rfidReader.PICC_IsNewCardPresent()) return;    // checks if new card is avaible
   if (!rfidReader.PICC_ReadCardSerial()) return;       // checks if it was able to read card
  
-  Serial.print("Karten UID: ");
+  Serial.print("CardID: ");
   for (int i = 0; i < rfidReader.uid.size; i++)
   {
     Serial.print(rfidReader.uid.uidByte[i]);
