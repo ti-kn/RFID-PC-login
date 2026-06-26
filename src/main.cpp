@@ -7,7 +7,7 @@ const byte BUTTON_PIN = 6;
 const byte SDA_PIN = 10;
 const byte RST_PIN = 9;
 
-LedControl matrix = LedControl(2, 4, 3, 1); // Pins: DIN, CLK, CS, Anzahl angeschlossener Module
+LedControl matrix = LedControl(2, 4, 3, 1); // Pins: DIN, CLK, CS, number of modules
 MFRC522 rfidReader(SDA_PIN, RST_PIN);
 
 const byte arrowRight[] = 
@@ -61,8 +61,8 @@ void setup()
   SPI.begin();
   rfidReader.PCD_Init();
 
-  matrix.shutdown(0, false);       // Display 0 aufwecken
-  matrix.setIntensity(0, 1);       // Helligkeit für Modul 0 stellen (0 - 15)
+  matrix.shutdown(0, false);      
+  matrix.setIntensity(0, 1);       
   matrix.clearDisplay(0);
 
   DrawAtMatrix(arrowRight);
@@ -127,8 +127,8 @@ void loop()
 
 void PrintCardUID()
 {
-  if (!rfidReader.PICC_IsNewCardPresent()) return;    // Überprüft ob neue Karte vorhanden ist
-  if (!rfidReader.PICC_ReadCardSerial()) return;       // Überprüft ob RFID gelesen werden konnte
+  if (!rfidReader.PICC_IsNewCardPresent()) return;    // checks if new card is avaible
+  if (!rfidReader.PICC_ReadCardSerial()) return;       // checks if it was able to read card
  
   Serial.print("Karten UID: ");
   for (int i = 0; i < rfidReader.uid.size; i++)
@@ -137,5 +137,5 @@ void PrintCardUID()
   }
   Serial.println();
 
-  rfidReader.PICC_HaltA();    // Karte schlafen legen (nicht in der loop die ganze Zeit auf dem SerialMonitor ausgeben)
+  rfidReader.PICC_HaltA();    // puts card to sleep
 }
